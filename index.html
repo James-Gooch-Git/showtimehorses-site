@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showtime — Run Your Horse Show in Real Time</title>
+<meta name="description" content="Showtime is South Africa's equestrian event management app: auto-generated riding orders, live arena updates, and one-tap steward scoring for show jumping, dressage and more.">
+<meta property="og:title" content="Showtime — Run Your Horse Show in Real Time">
+<meta property="og:description" content="Auto-generated riding orders, live arena boards, and effortless event management for South African horse shows.">
+<meta property="og:url" content="https://showtimehorses.co.za">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐎</text></svg>">
+<style>
+  :root {
+    --green: #14322a;
+    --green-dark: #0d241e;
+    --gold: #c9a24b;
+    --gold-light: #e0c07a;
+    --cream: #faf6ee;
+    --ink: #22302c;
+    --muted: #5c6b66;
+    --white: #ffffff;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+  a { color: var(--green); }
+  img { max-width: 100%; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--green);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner {
+    max-width: 1080px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand {
+    font-family: Georgia, serif; font-size: 22px; font-weight: 700;
+    color: var(--cream); text-decoration: none; letter-spacing: 0.5px;
+  }
+  .brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+  .nav-links a {
+    color: rgba(250,246,238,0.85); text-decoration: none; font-size: 15px;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: var(--gold); color: var(--green-dark) !important;
+    padding: 8px 18px; border-radius: 999px; font-weight: 600;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+  @media (max-width: 640px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+
+  /* Hero */
+  header.hero {
+    background: linear-gradient(160deg, var(--green) 0%, var(--green-dark) 100%);
+    color: var(--cream);
+    padding: 88px 0 96px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 5.5vw, 56px);
+    max-width: 780px; margin: 0 auto 20px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero p.sub {
+    font-size: clamp(17px, 2.2vw, 20px);
+    max-width: 640px; margin: 0 auto 36px;
+    color: rgba(250,246,238,0.85);
+  }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 14px 30px; border-radius: 999px;
+    font-size: 16px; font-weight: 600; text-decoration: none;
+    transition: transform 0.1s ease, background 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-gold { background: var(--gold); color: var(--green-dark); }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-outline { border: 2px solid rgba(250,246,238,0.5); color: var(--cream); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+  .hero-badges { margin-top: 44px; font-size: 14px; color: rgba(250,246,238,0.6); }
+  .hero-badges span { margin: 0 12px; white-space: nowrap; }
+
+  /* Sections */
+  section { padding: 76px 0; }
+  section.alt { background: var(--white); }
+  .kicker {
+    text-transform: uppercase; letter-spacing: 2px; font-size: 13px;
+    color: var(--gold); font-weight: 700; margin-bottom: 10px;
+  }
+  .section-title { font-size: clamp(26px, 3.5vw, 36px); margin-bottom: 14px; }
+  .section-lead { color: var(--muted); max-width: 640px; margin-bottom: 40px; font-size: 17px; }
+
+  /* Features */
+  .feature-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px;
+  }
+  .feature {
+    background: var(--cream); border: 1px solid #e8e0d0;
+    border-radius: var(--radius); padding: 26px;
+  }
+  section:not(.alt) .feature { background: var(--white); }
+  .feature .icon { font-size: 30px; margin-bottom: 12px; }
+  .feature h3 { font-size: 19px; margin-bottom: 8px; }
+  .feature p { color: var(--muted); font-size: 15px; }
+
+  /* Audience */
+  .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .audience {
+    background: var(--green); color: var(--cream);
+    border-radius: var(--radius); padding: 30px;
+  }
+  .audience h3 { color: var(--gold-light); font-size: 20px; margin-bottom: 12px; }
+  .audience ul { list-style: none; }
+  .audience li { padding: 6px 0 6px 26px; position: relative; font-size: 15px; color: rgba(250,246,238,0.9); }
+  .audience li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+  /* About */
+  .about-flex { display: flex; gap: 48px; flex-wrap: wrap; align-items: flex-start; }
+  .about-text { flex: 1 1 420px; }
+  .about-text p { margin-bottom: 16px; color: var(--ink); }
+  .about-aside {
+    flex: 1 1 280px; background: var(--cream); border-left: 4px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0; padding: 24px;
+  }
+  .about-aside h3 { font-size: 17px; margin-bottom: 10px; }
+  .about-aside p { font-size: 15px; color: var(--muted); }
+
+  /* Download */
+  .store-buttons { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+  .store-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #000; color: #fff; text-decoration: none;
+    border-radius: 10px; padding: 10px 20px; min-width: 190px;
+  }
+  .store-btn:hover { background: #222; }
+  .store-btn .glyph { font-size: 28px; line-height: 1; }
+  .store-btn .lines small { display: block; font-size: 11px; opacity: 0.8; }
+  .store-btn .lines strong { font-size: 18px; font-family: -apple-system, sans-serif; }
+  .store-btn.disabled { background: #9aa39f; pointer-events: none; }
+
+  /* Demo form */
+  .demo-wrap { max-width: 620px; }
+  form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { form .row { grid-template-columns: 1fr; } }
+  label { display: block; font-size: 14px; font-weight: 600; margin: 16px 0 6px; }
+  input, select, textarea {
+    width: 100%; padding: 12px 14px; font-size: 15px; font-family: inherit;
+    border: 1px solid #d7cfbe; border-radius: 8px; background: var(--white); color: var(--ink);
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+  button[type="submit"] {
+    margin-top: 24px; border: none; cursor: pointer;
+    background: var(--green); color: var(--cream);
+    padding: 14px 34px; border-radius: 999px; font-size: 16px; font-weight: 600;
+  }
+  button[type="submit"]:hover { background: var(--green-dark); }
+  .form-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
+
+  /* Contact / footer */
+  footer {
+    background: var(--green-dark); color: rgba(250,246,238,0.75);
+    padding: 48px 0 36px; font-size: 14px;
+  }
+  .footer-grid { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; margin-bottom: 28px; }
+  footer h4 { color: var(--cream); font-size: 15px; margin-bottom: 10px; }
+  footer a { color: var(--gold-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; font-size: 13px; color: rgba(250,246,238,0.5); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">Show<span>time</span></a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#about">About Us</a>
+      <a href="#download">Download</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-cta" href="#demo">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <h1>Run your horse show <em>in real time</em>.</h1>
+    <p class="sub">Showtime is South Africa's equestrian event management platform — auto-generated riding orders, live arena updates, and dead-simple scoring for stewards. Built for SA shows, from SANESA schools events to open jumping.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#demo">Book a Demo</a>
+      <a class="btn btn-outline" href="#download">Download the App</a>
+    </div>
+    <p class="hero-badges">
+      <span>🐎 All disciplines</span>
+      <span>📱 iOS &amp; Android</span>
+      <span>🇿🇦 Built for South Africa</span>
+    </p>
+  </div>
+</header>
+
+<section id="features" class="alt">
+  <div class="container">
+    <p class="kicker">Why Showtime</p>
+    <h2 class="section-title">Everything a show needs, in one app</h2>
+    <p class="section-lead">From the organiser's desk to the ring steward's phone to the rider warming up — everyone sees the same live picture of the day.</p>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="icon">🎲</div>
+        <h3>Auto-generated riding orders</h3>
+        <p>Fair, random draws generated in seconds — with trainer grouping, horse recovery gaps, and multi-horse rider handling built in. No more late-night spreadsheets.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📡</div>
+        <h3>Live arena updates</h3>
+        <p>Every arena, live: who's on track, their time and faults, who's next, and how long until your ride. Riders stop crowding the gate to ask.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">👆</div>
+        <h3>One-tap steward scoring</h3>
+        <p>Stewards run a class with a single button. Big targets, high contrast, works on a phone in a field — poles, refusals, scratches and swaps all handled.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🗓️</div>
+        <h3>Auto day schedules</h3>
+        <p>Generate a full arena-by-arena timetable from your class lists — with clash detection when the same horse is entered across arenas.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🏆</div>
+        <h3>Instant results</h3>
+        <p>Leaderboards update the moment a round finishes. Standard, two-phase and jump-off classes all scored correctly, automatically.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">✍️</div>
+        <h3>Effortless entries</h3>
+        <p>Riders create a profile once, then enter any show in a few taps. Organisers see entries, classes and outstanding paperwork in one dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="kicker">Who it's for</p>
+    <h2 class="section-title">One platform, every role on show day</h2>
+    <div class="audience-grid">
+      <div class="audience">
+        <h3>Organisers</h3>
+        <ul>
+          <li>Create events, classes and arenas in minutes</li>
+          <li>Generate and publish riding orders instantly</li>
+          <li>Track entries and class counts live</li>
+          <li>Push schedule changes to every rider at once</li>
+        </ul>
+      </div>
+      <div class="audience">
+        <h3>Riders, Trainers &amp; Parents</h3>
+        <ul>
+          <li>Enter shows from your phone in a few taps</li>
+          <li>Get notified when riding orders are published</li>
+          <li>See exactly when you're due in the arena</li>
+          <li>Follow live results as they happen</li>
+        </ul>
+      </div>
+      <div class="audience">
+        <h3>Stewards &amp; Judges</h3>
+        <ul>
+          <li>No account setup — join with an event code</li>
+          <li>Run a whole class with one primary button</li>
+          <li>Log penalties, scratches and swaps in a tap</li>
+          <li>Designed for volunteers using it for the first time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="alt">
+  <div class="container">
+    <p class="kicker">About Us</p>
+    <h2 class="section-title">Built by people who've stood at the ring all day</h2>
+    <div class="about-flex">
+      <div class="about-text">
+        <p>Showtime started with a simple frustration familiar to anyone in South African equestrian sport: riding orders drawn up by hand the night before, schedules that drift within the first hour, and riders who spend the whole day asking "how long until my class?"</p>
+        <p>We're building the tool we wished existed — a single app where organisers set up the show, the system draws fair riding orders automatically, stewards keep each arena moving with one tap, and everyone on the ground sees exactly what's happening in every ring, live.</p>
+        <p>Showtime supports all disciplines — show jumping, dressage, showing, Western, endurance and more — and works with events run under SASJ, SANESA, Equestrian SA or independently.</p>
+      </div>
+      <div class="about-aside">
+        <h3>Why South Africa first?</h3>
+        <p>International platforms weren't built for how SA shows actually run — school leagues, volunteer stewards, rural showgrounds with patchy signal. Showtime is designed for exactly that: lightweight, offline-tolerant, and simple enough that a first-time volunteer needs zero training.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="container">
+    <p class="kicker">Get the App</p>
+    <h2 class="section-title">Download Showtime</h2>
+    <p class="section-lead">Free for riders, trainers and spectators. Browse events, manage your entries, and follow live arena boards.</p>
+    <div class="store-buttons">
+      <!-- TODO: replace href with the real App Store URL -->
+      <a class="store-btn" href="APP_STORE_URL_PLACEHOLDER">
+        <span class="glyph"></span>
+        <span class="lines"><small>Download on the</small><strong>App Store</strong></span>
+      </a>
+      <a class="store-btn disabled" href="#" aria-disabled="true">
+        <span class="glyph">▶</span>
+        <span class="lines"><small>Coming soon to</small><strong>Google Play</strong></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="alt">
+  <div class="container demo-wrap">
+    <p class="kicker">For Organisers &amp; Clubs</p>
+    <h2 class="section-title">Book a demo</h2>
+    <p class="section-lead">Running shows for a club, school league or venue? We'll walk you through Showtime on a call and help you set up your first event. No commitment.</p>
+    <!-- TODO: replace YOUR_FORM_ID with your Formspree form ID (formspree.io) -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="row">
+        <div>
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+        <div>
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="org">Club / organisation</label>
+          <input type="text" id="org" name="organisation">
+        </div>
+        <div>
+          <label for="role">Your role</label>
+          <select id="role" name="role">
+            <option>Show organiser</option>
+            <option>Club / venue owner</option>
+            <option>Trainer / yard owner</option>
+            <option>Rider or parent</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <label for="message">Tell us about your shows</label>
+      <textarea id="message" name="message" rows="4" placeholder="e.g. We run monthly training shows with 3 arenas and around 200 entries..."></textarea>
+      <input type="hidden" name="_subject" value="Showtime demo request">
+      <button type="submit">Request a Demo</button>
+      <p class="form-note">Prefer email? Write to us at <a href="mailto:info@showtimehorses.co.za">info@showtimehorses.co.za</a> — we usually reply within one business day.</p>
+    </form>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Showtime</h4>
+        <p>Equestrian event management,<br>built for South Africa.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:info@showtimehorses.co.za">info@showtimehorses.co.za</a></p>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <p><a href="privacy.html">Privacy Policy</a></p>
+      </div>
+      <div>
+        <h4>Get Started</h4>
+        <p><a href="#demo">Book a demo</a><br><a href="#download">Download the app</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Showtime Horses. All rights reserved. · showtimehorses.co.za
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -19,8 +19,8 @@ within a minute or two.
 1. **Formspree** (Book a Demo form): create a free account at [formspree.io](https://formspree.io),
    create a form pointed at `info@showtimehorses.co.za`, and replace `YOUR_FORM_ID`
    in `index.html` with the real form ID.
-2. **App Store link**: replace `APP_STORE_URL_PLACEHOLDER` in `index.html` with the
-   real App Store URL.
+2. **Email forwarding**: at domains.co.za, forward `info@showtimehorses.co.za`
+   to a real inbox — the site and privacy policy both use it.
 3. **DNS at domains.co.za** (Manage Domain → DNS):
    - Four `A` records on the apex (`@`): `185.199.108.153`, `185.199.109.153`,
      `185.199.110.153`, `185.199.111.153`

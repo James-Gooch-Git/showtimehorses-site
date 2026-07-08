@@ -19,11 +19,14 @@ within a minute or two.
 1. **Formspree** (Book a Demo form): create a free account at [formspree.io](https://formspree.io),
    create a form pointed at `info@showtimehorses.co.za`, and replace `YOUR_FORM_ID`
    in `index.html` with the real form ID.
-2. **Email forwarding**: at domains.co.za, forward `info@showtimehorses.co.za`
-   to a real inbox — the site and privacy policy both use it.
-3. **DNS at domains.co.za** (Manage Domain → DNS):
+2. **Email forwarding**: Cloudflare dashboard → Email → Email Routing — forward
+   `info@showtimehorses.co.za` to a real inbox. The site and privacy policy both use it.
+3. **DNS at Cloudflare** (NOT domains.co.za — the domain's nameservers are delegated
+   to Cloudflare; domains.co.za is registrar only). In the zone's DNS → Records:
    - Four `A` records on the apex (`@`): `185.199.108.153`, `185.199.109.153`,
      `185.199.110.153`, `185.199.111.153`
    - `CNAME` record: `www` → `james-gooch-git.github.io`
+   - Every record set to **"DNS only" (grey cloud), not Proxied** — GitHub Pages
+     can't issue its TLS certificate behind Cloudflare's proxy.
 4. In the GitHub repo: Settings → Pages → confirm custom domain `showtimehorses.co.za`
    and tick **Enforce HTTPS** once the DNS check passes.

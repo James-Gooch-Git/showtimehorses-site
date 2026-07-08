@@ -19,14 +19,20 @@ within a minute or two.
 1. **Formspree** (Book a Demo form): create a free account at [formspree.io](https://formspree.io),
    create a form pointed at `info@showtimehorses.co.za`, and replace `YOUR_FORM_ID`
    in `index.html` with the real form ID.
-2. **Email forwarding**: Cloudflare dashboard → Email → Email Routing — forward
-   `info@showtimehorses.co.za` to a real inbox. The site and privacy policy both use it.
-3. **DNS at Cloudflare** (NOT domains.co.za — the domain's nameservers are delegated
-   to Cloudflare; domains.co.za is registrar only). In the zone's DNS → Records:
-   - Four `A` records on the apex (`@`): `185.199.108.153`, `185.199.109.153`,
-     `185.199.110.153`, `185.199.111.153`
-   - `CNAME` record: `www` → `james-gooch-git.github.io`
-   - Every record set to **"DNS only" (grey cloud), not Proxied** — GitHub Pages
-     can't issue its TLS certificate behind Cloudflare's proxy.
-4. In the GitHub repo: Settings → Pages → confirm custom domain `showtimehorses.co.za`
-   and tick **Enforce HTTPS** once the DNS check passes.
+2. **Email forwarding**: Cloudflare dashboard → Email → Email Routing — confirm
+   `info@showtimehorses.co.za` forwards to a real inbox. The site and privacy policy both use it.
+
+## DNS / TLS architecture (done 2026-07-08)
+
+DNS lives at **Cloudflare** (NOT domains.co.za — that's registrar only). The zone has
+four apex `A` records (`185.199.108–111.153`) and `CNAME www → james-gooch-git.github.io`,
+all **Proxied (orange cloud)**: Cloudflare terminates TLS with its own certificate and
+edge-caches (including Johannesburg/Cape Town), with GitHub Pages as origin.
+
+Consequences of the proxied setup:
+- Cloudflare SSL mode must stay **Full** (Flexible risks redirect loops; Full (strict)
+  breaks — GitHub holds no cert for this domain while proxied).
+- **Always Use HTTPS** should be On in Cloudflare; GitHub's "Enforce HTTPS" checkbox
+  is irrelevant and its cert provisioning never completes — expected.
+- Pushed changes can take up to ~10 min to appear (edge cache, `max-age=600`);
+  purge cache in Cloudflare to see them immediately.

@@ -19,7 +19,8 @@ within a minute or two.
 1. ~~Formspree~~ — done: the demo form posts to `https://formspree.io/f/xlgyyjrn`
    (AJAX with inline success, plain-POST fallback). Manage it in the Formspree dashboard.
 2. **Email forwarding**: Cloudflare dashboard → Email → Email Routing — confirm
-   `info@showtimehorses.co.za` forwards to a real inbox. The site and privacy policy both use it.
+   legacy `info@showtimehorses.co.za` forwards to `info@showtimeza.com`. The
+   site and privacy policy use `info@showtimeza.com`.
 
 ## DNS / TLS architecture (done 2026-07-08)
 

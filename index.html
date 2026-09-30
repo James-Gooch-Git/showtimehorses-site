@@ -765,7 +765,7 @@
           <input type="hidden" name="_subject" value="Showtime demo request">
           <button type="submit">Request a Demo</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-          <p class="form-note">Prefer email? <a href="mailto:info@showtimehorses.co.za">info@showtimehorses.co.za</a> — we reply within one business day.</p>
+          <p class="form-note">Prefer email? <a href="mailto:info@showtimeza.com">info@showtimeza.com</a> — we reply within one business day.</p>
         </form>
         <div class="form-success" id="form-success" hidden>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
@@ -789,7 +789,7 @@
       </div>
       <div>
         <h4>Contact</h4>
-        <p><a href="mailto:info@showtimehorses.co.za">info@showtimehorses.co.za</a></p>
+        <p><a href="mailto:info@showtimeza.com">info@showtimeza.com</a></p>
       </div>
       <div>
         <h4>Legal</h4>
@@ -850,11 +850,11 @@
           return res.json().then(function (data) {
             status.textContent = (data.errors && data.errors.length)
               ? data.errors.map(function (err) { return err.message; }).join(', ')
-              : 'Something went wrong — please email info@showtimehorses.co.za instead.';
+              : 'Something went wrong — please email info@showtimeza.com instead.';
           });
         }
       }).catch(function () {
-        status.textContent = 'Network problem — please try again, or email info@showtimehorses.co.za.';
+        status.textContent = 'Network problem — please try again, or email info@showtimeza.com.';
       }).finally(function () {
         button.disabled = false;
         button.textContent = 'Request a Demo';

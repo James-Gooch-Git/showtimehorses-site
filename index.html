@@ -73,7 +73,7 @@
   .nav-links { display: flex; gap: 26px; align-items: center; }
   .nav-links a {
     color: rgba(255,255,255,0.82); text-decoration: none;
-    font-size: 14.5px; font-weight: 500;
+    font-size: 14.5px; font-weight: 500; white-space: nowrap;
   }
   .nav-links a:hover { color: #fff; }
   .nav-cta {
@@ -82,7 +82,11 @@
     transition: background 0.15s ease;
   }
   .nav-cta:hover { background: #3EDDBE; }
-  @media (max-width: 700px) { .nav-links a:not(.nav-cta) { display: none; } }
+  @media (max-width: 700px) {
+    .nav-links { gap: 16px; }
+    .nav-links a:not(.nav-cta):not(.nav-login) { display: none; }
+    .nav-cta { padding: 8px 14px; }
+  }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -458,6 +462,7 @@
       <a href="#how">How It Works</a>
       <a href="#about">About</a>
       <a href="#download">Download</a>
+      <a class="nav-login" href="https://showtime-portal.vercel.app/sign-in">Log in</a>
       <a class="nav-cta" href="#demo">Book a Demo</a>
     </div>
   </div>
@@ -797,7 +802,7 @@
       </div>
       <div>
         <h4>Get Started</h4>
-        <p><a href="#demo">Book a demo</a><br><a href="#download">Download the app</a></p>
+        <p><a href="#demo">Book a demo</a><br><a href="#download">Download the app</a><br><a href="https://showtime-portal.vercel.app/sign-in">Organiser log in</a></p>
       </div>
     </div>
     <div class="footer-bottom">
